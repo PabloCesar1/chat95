@@ -3,11 +3,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3 col-sm-12">
-                <h1 class="text-center">
+                <h2 class="text-center">
                     Chat95
                     <button id="clear" class="btn btn-danger">Borrar chat</button>
-                </h1>
+                </h2>
                 <br>
+                <div id="newUser">
+                    
+                </div><br>
                 <div id="status">
                     
                 </div><br>
@@ -36,10 +39,12 @@
             var messages = element('messages')
             var textarea = element('textarea')
             var username = element('username')
+            var newUser = element('newUser')
             var clearBTN = element('clear')
 
             //Set default status
             var statusDefault = status.textContent
+            var statusDefault2 = newUser.textContent
             var setStatus = function (s) {
                 //Set status
                 status.textContent = s
@@ -47,6 +52,17 @@
                 if (s !== statusDefault) {
                     var delay = setTimeout(function () {
                         setStatus(statusDefault)
+                    }, 4000)
+                }
+            }
+
+             var setStatus2 = function (s) {
+                //Set status
+                newUser.textContent = s
+
+                if (s !== statusDefault2) {
+                    var delay = setTimeout(function () {
+                        setStatus2(statusDefault2)
                     }, 4000)
                 }
             }
@@ -69,13 +85,13 @@
                         }
                     }
                 })
-                socket.on('mensaje', function(data){
+                /*socket.on('mensaje', function(data){
                     var newUser = document.createElement('div')
                     newUser.setAttribute('class', 'newUser')
                     newUser.style.color = 'blue'
                     newUser.textContent = data.text
                     messages.appendChild(newUser)
-                });
+                });*/
 
                 // Get Status From Server
                 socket.on('status', function (data) {
@@ -85,6 +101,12 @@
                     if (data.clear) {
                         textarea.value = '';
                     }
+                });
+
+                socket.on('newuser', function (msg) {
+                    // get message status
+                    setStatus2( msg.text);
+                    newUser.style.color = 'blue'
                 });
 
                 // Handle Input
