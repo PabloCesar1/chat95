@@ -4,6 +4,9 @@ const mongoose = require('mongoose')
 const app = require('./app')
 const port = process.env.PORT || 3000
 var Chat = require('./models/chat')
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 
 
 mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (err, res) => {
@@ -13,7 +16,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
         console.log("La base de datos esta corriendo correctmente");
         //----------------------------------------------------------------
         //                                        || Connect to socket.io ||
-        client.on('connection', (socket) => {
+        io.on('connection', (socket) => {
             let chat = Chat
             //Function to send status
             var sendStatus = (s) => {
@@ -37,7 +40,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 } else {
                     var data = new Chat({ name: name, message: message })
                     data.save(() => {
-                        client.emit('output', [data])
+                        io.emit('output', [data])
                         sendStatus({
                             message: 'Mensaje enviado',
                             clear: true
@@ -55,7 +58,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
         })
 
         //-----------------------------------------------------
-        app.listen(port, function () {
+        http.listen(port, function () {
             //Corriendo en el puerto...
             console.log("Api Rest server listening in port " + port);
         });
