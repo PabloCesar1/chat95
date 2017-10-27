@@ -1,6 +1,7 @@
 'use strict'
-var express = require('express');
-var bodyParser = require('body-parser');
+
+var express = require('express')
+var bodyParser = require('body-parser')
 var expressHandlebars = require('express-handlebars')
 var path = require('path')
 var app = express();
