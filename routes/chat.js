@@ -10,6 +10,5 @@ api.get('/', chatController.getView);
 api.get('/auth/facebook', loginController.loginFacebook);
 api.get('/auth/facebook/callback', loginController.callbackFacebook);
 api.get('/logout', loginController.logout);
-//api.get('/auth/facebook', passport.authenticate('facebook'));
 
 module.exports = api;
