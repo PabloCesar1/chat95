@@ -13,9 +13,10 @@ function loginFacebook() {
 function callbackFacebook() {
     console.log('redirigiendo')
     passport.authenticate('facebook',
-        { successRedirect: '/', failureRedirect: '/' }
+        { successRedirect: '/', failureRedirect: '/login' }
     )
 }
+
 function logout(req, res) {
     req.logout();
     res.redirect('/');
