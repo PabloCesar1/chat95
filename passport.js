@@ -3,7 +3,7 @@
 const mongoose = require('mongoose'),
 FacebookStrategy = require('passport-facebook').Strategy,
 config = require('./config'),
-const User = require('./models/user')
+User = require('./models/user')
 
 module.exports = function(passport) {
 	passport.serializeUser(function(user, done) {
