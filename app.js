@@ -29,7 +29,7 @@ app.use(session({ secret: '1234ppp' }))
 app.use(passport.initialize());
 app.use(passport.session());
 app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/login', passport.authenticate('facebook',
+app.get('/auth/facebook/callback', passport.authenticate('facebook',
     { successRedirect: '/', failureRedirect: '/login' }
 ));
 app.get('/logout', function (req, res) {
