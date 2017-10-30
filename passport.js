@@ -16,7 +16,7 @@ module.exports = function(passport) {
 		clientID			: config.facebook.id,
 		clientSecret		: config.facebook.secret,
 		callbackURL	 		: '/auth/facebook/callback',
-        profileFields 		: ['id', 'email', 'displayName', 'provider', 'photos']
+        profileFields 		: ['id', 'email', 'displayName', 'photos']
 	}, function(accessToken, refreshToken, profile, done) {
 		User.findOne({provider_id: profile.id}, function(err, user) {
 			if(err) throw(err);
@@ -24,7 +24,7 @@ module.exports = function(passport) {
 			var user = new User({
                 provider_id:    profile.id,
                 email:          profile.email,
-				provider:       profile.provider,
+				//provider:       profile.provider,
 				name:           profile.displayName,
 				photo:          profile.photos[0].value
 			});
