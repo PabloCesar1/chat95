@@ -16,16 +16,17 @@ module.exports = function (passport) {
 		clientID: config.facebook.id,
 		clientSecret: config.facebook.secret,
 		callbackURL: '/auth/facebook/callback',
-		profileFields: ['id', 'displayName', 'first_name', 'email', 'photos']
+		profileFields: ['id', 'displayName', 'first_name', 'emails', 'photos']
 	}, function (accessToken, refreshToken, profile, done) {
 		User.findOne({ provider_id: profile.id }, function (err, user) {
 			if (err) throw (err);
 			if (!err && user != null) return done(null, user);
 			var user = new User({
+				provider:'facebook',
 				provider_id: profile.id,
 				name: profile.displayName,
 				firstname: profile.first_name,
-				email: profile.email,
+				email: profile.emails[0].value,
 				photo: profile.photos[0].value
 			});
 			user.save(function (err) {
