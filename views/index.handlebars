@@ -7,6 +7,9 @@
                     Chat95
                     <button id="clear" class="btn btn-danger">Borrar chat</button>
                 </h2>
+                {{#if user}}
+                    <div class="alert alert-succes">{{user}}</div>
+                {{/if}}
                 <br>
                 <div id="newUser">
                     

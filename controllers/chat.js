@@ -3,7 +3,9 @@
 var Chat = require('../models/chat');
 
 function getView(req, res){
-    res.render('index')
+    res.render('index', {
+        user: req.user
+    })
 }
 
 module.exports = {
