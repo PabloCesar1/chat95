@@ -11,10 +11,14 @@
                     <button id="clear" class="btn btn-danger">Borrar chat</button>
                 </h2>
                 <br><br>
-                <center>
-                    <img src="{{user.photo}}" alt="" style="border-radius: 50%">
-                    <h5>{{user.name}}</h5>
-                </center>
+                {{#if user}}
+                    <center>
+                        <img src="{{user.photo}}" alt="" style="border-radius: 50%">
+                        <h5>{{user.name}}</h5>
+                    </center>
+                {{else}}
+                    <h5>Inicie sesión</h5>
+                {{/if}}
                 <br>
                 <div id="newUser">
                     
