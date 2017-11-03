@@ -40,7 +40,7 @@
                 <div id="status">
                     
                 </div><br>
-                {{#if user}}
+                
                 <div id="chat">
                     <input type="text" id="username" class="form-control" placeholder="Escriba su nombre">
                     <div class="card">
@@ -51,7 +51,7 @@
                         <textarea id="textarea" class="form-control" placeholder="Escriba su mensaje"></textarea>
                     </div>
                 </div>
-                {{/if}}
+
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
             //Connect to socket.io
             
             var socket  = io();
-            messages.innerHTML = ''
+            //messages.innerHTML = ''
             if (socket != undefined) {
                 console.log('Conected to socket')
                 socket.on('output', function (data) {
