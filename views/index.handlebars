@@ -98,7 +98,9 @@
             }
 
             //Connect to socket.io
+            
             var socket  = io();
+            messages.innerHTML = ''
             if (socket != undefined) {
                 console.log('Conected to socket')
                 socket.on('output', function (data) {
