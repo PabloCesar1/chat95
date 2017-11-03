@@ -1,3 +1,13 @@
+<style>
+    .chat-message{
+        background-color: #448AFF;
+        margin-top : 12px;
+        color: #fff;
+    }
+</style>
+
+
+
 <section>
     <br>
     <div class="container">
@@ -96,13 +106,13 @@
                     if (data.length) {
                         for (var x = 0; x < data.length; x++) {
                             // Build out message div
-                            var message = document.createElement('div');
-                            message.setAttribute('class', 'chat-message');
-                            message.textContent = data[x].name + ": " + data[x].message;
-                            //messages.appendChild(message);
-                            messages.innerHTML = message
-                            messages.insertBefore(message, messages.firstChild);
+                            var message = document.createElement('div')//new container
+                            message.setAttribute('class', 'chat-message'); //add class at new container
+                            message.textContent = data[x].name + ": " + data[x].message; //create content
+                            messages.appendChild(message); // add content
+                            //messages.insertBefore(message, messages.firstChild);
                             messages.scrollTop = '9999';
+                            //console.log(data[x])
                         }
                     }
                 })

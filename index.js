@@ -27,9 +27,9 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 if (err) {
                     throw err
                 }
-                socket.emit('output', res)
+                socket.emit('output', res)//Send messages at client in connection
                 socket.broadcast.emit('newuser', {text: 'Un nuevo usuario se ha conectado.'});
-            }).sort({ _id: -1 });
+            })
 
             socket.on('input', (data) => {
                 let name = data.name
@@ -40,7 +40,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 } else {
                     var data = new Chat({ name: name, message: message })
                     data.save(() => {
-                        io.emit('output', [data])
+                        io.emit('output', [data])//Send a new message
                         sendStatus({
                             message: 'Mensaje enviado',
                             clear: true
