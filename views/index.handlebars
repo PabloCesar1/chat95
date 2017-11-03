@@ -1,7 +1,11 @@
 <section>
     <br>
     <div class="container">
-        <a href="auth/facebook">Login con Facebook</a>
+        {{#if user}}
+            <a href="logout">Cerrar Sesión</a>
+        {{else}}
+            <a href="auth/facebook">Login con Facebook</a>
+        {{/if}}
     </div>
     <div class="container">
         <div class="row">
