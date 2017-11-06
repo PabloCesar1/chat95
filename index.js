@@ -34,11 +34,10 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
             socket.on('input', (data) => {
                 let user = data.user
                 let text = data.text
-
                 if (user == '' || text == '') {
                     sendStatus('Nombre y mensaje requeridos')
                 } else {
-                    var chat = new Chat({ user: user, text: text })
+                    var chat = new Chat({ user: data.user, text: data.text })
                     console.log(data)
                     chat.save(() => {
                         io.emit('output', [chat])//Send a new message
