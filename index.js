@@ -33,7 +33,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
             })*/
 
             chat.find({}).populate('user').exec( (err, res) => {
-                if (err) {
+                if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
                     throw err
                 }
                 socket.emit('output', res)//Send messages at client in connection

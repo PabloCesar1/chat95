@@ -25,7 +25,6 @@ module.exports = function (passport) {
 				provider:'facebook',
 				provider_id: profile.id,
 				name: profile.displayName,
-				email: profile.email,
 				photo: profile.photos[0].value
 			});
 			user.save(function (err) {
