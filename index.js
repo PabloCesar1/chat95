@@ -38,8 +38,9 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 if (user == '' || text == '') {
                     sendStatus('Nombre y mensaje requeridos')
                 } else {
-                    var data = new Chat({ user: user, text: text })
-                    data.save(() => {
+                    var chat = new Chat({ user: user, text: text })
+                    console.log(data)
+                    chat.save(() => {
                         io.emit('output', [data])//Send a new message
                         sendStatus({
                             message: 'Mensaje enviado',
