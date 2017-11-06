@@ -23,7 +23,16 @@ app.set('view engine', 'handlebars');
 //--------------Session---------------------
 // Indicamos que use sesiones, para almacenar el objeto usuario
 // y que lo recuerde aunque abandonemos la página
-app.use(session({ secret: '1234ppp' }))
+//app.use(session({ secret: '1234ppp', resave: true, saveUninitialized: true }))
+app.use(session({
+    secret: '1234ppp',
+    name: 'user',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure : true, maxAge: null }
+}));
+
 // Configuración de Passport. Lo inicializamos
 // y le indicamos que Passport maneje la Sesión
 app.use(passport.initialize());
