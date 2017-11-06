@@ -48,12 +48,19 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 } else {
                     var chat = new Chat({ user: user, text: text })
                     console.log(data)
-                    chat.save(() => {
-                        io.emit('output', [chat])//Send a new message
-                        sendStatus({
-                            message: 'Mensaje enviado',
-                            clear: true
+                    chat.save((error) => {
+                        if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
+                            throw err
+                        }
+                        chat.find({}).populate('user').exec( (err, res) => {
+                            io.emit('output', [chat])//Send a new message
+                            sendStatus({
+                                message: 'Mensaje enviado',
+                                clear: true
+                            })
                         })
+
+                        
                     })
                 }
             })
