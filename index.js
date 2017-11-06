@@ -32,13 +32,13 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
             })
 
             socket.on('input', (data) => {
-                let name = data.name
-                let message = data.message
+                let user = data.user
+                let text = data.text
 
-                if (name == '' || message == '') {
+                if (user == '' || text == '') {
                     sendStatus('Nombre y mensaje requeridos')
                 } else {
-                    var data = new Chat({ name: name, message: message })
+                    var data = new Chat({ user: user, text: text })
                     data.save(() => {
                         io.emit('output', [data])//Send a new message
                         sendStatus({

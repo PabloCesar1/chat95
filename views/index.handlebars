@@ -22,7 +22,7 @@
             <div class="col-md-6 offset-md-3 col-sm-12">
                 <h2 class="text-center">
                     Chat95
-                    <button id="clear" class="btn btn-danger">Borrar chat</button>
+                    <button id="clear">Borrar chat</button>
                 </h2>
                 <br><br>
                 {{#if user}}
@@ -40,7 +40,7 @@
                 <div id="status">
                     
                 </div><br>
-                
+                {{#if user}}
                 <div id="chat">
                     <input type="text" id="username" class="form-control" placeholder="Escriba su nombre">
                     <div class="card">
@@ -51,6 +51,7 @@
                         <textarea id="textarea" class="form-control" placeholder="Escriba su mensaje"></textarea>
                     </div>
                 </div>
+                {{/if}}
 
             </div>
         </div>
@@ -110,7 +111,7 @@
                             // Build out message div
                             var message = document.createElement('div')//new container
                             message.setAttribute('class', 'chat-message'); //add class at new container
-                            message.textContent = data[x].name + ": " + data[x].message; //create content
+                            message.textContent = data[x].user + ": " + data[x].text; //create content
                             messages.appendChild(message); // add content
                             //messages.insertBefore(message, messages.firstChild);
                             messages.scrollTop = '9999';
@@ -147,8 +148,9 @@
                     if (event.which === 13 && event.shiftKey == false) {
                         // Emit to server input
                         socket.emit('input', {
-                            name: username.value,
-                            message: textarea.value
+
+                            user: username.value,
+                            text: textarea.value
                         });
                         event.preventDefault();
                     }
