@@ -30,7 +30,7 @@ app.use(session({
     proxy: true,
     resave: true,
     saveUninitialized: true,
-    cookie: { secure : true, maxAge: null }
+    cookie: { secure : true, maxAge: 50 } 
 }));
 
 // Configuración de Passport. Lo inicializamos
