@@ -7,6 +7,8 @@ var bodyParser = require('body-parser')
 var expressHandlebars = require('express-handlebars')
 var path = require('path')
 var app = express();
+var MemoryStore = require('session-memory-store')(session);
+
 
 //Cargar rutas
 var chat_routes = require('./routes/chat');
@@ -27,10 +29,11 @@ app.set('view engine', 'handlebars');
 app.use(session({
     secret: '1234ppp',
     name: 'user',
-    proxy: true,
+    //proxy: true,
     resave: true,
     saveUninitialized: true,
-    cookie: { secure : true, maxAge: 50 } 
+    //cookie: {  maxAge: 3600000 } ,
+    store: new MemoryStore({ expires : 3600000 })
 }));
 
 // Configuración de Passport. Lo inicializamos
