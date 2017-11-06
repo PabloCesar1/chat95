@@ -32,12 +32,12 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 socket.broadcast.emit('newuser', {text: 'Un nuevo usuario se ha conectado.'});
             })*/
 
-            chat.find({}).populate('user').exec( (err, res) => {
+            chat.find({}).populate('user').exec((err, res) => {
                 if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
                     throw err
                 }
                 socket.emit('output', res)//Send messages at client in connection
-                socket.broadcast.emit('newuser', {text: 'Un nuevo usuario se ha conectado.'});
+                socket.broadcast.emit('newuser', { text: 'Un nuevo usuario se ha conectado.' });
             })
 
             socket.on('input', (data) => {
@@ -47,21 +47,29 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                     sendStatus('Nombre y mensaje requeridos')
                 } else {
                     var chat = new Chat({ user: user, text: text })
+                    //var chat = new Chat({ 'user': {'name':user}, text: text })                    
                     console.log(data)
-                    chat.save((error) => {
-                        if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
-                            throw err
-                        }
-                        chat.find({}).populate('user').exec( (err, res) => {
-                            io.emit('output', [chat])//Send a new message
-                            sendStatus({
-                                message: 'Mensaje enviado',
-                                clear: true
-                            })
+                    chat.save(() => {
+                        io.emit('output', [chat])//Send a new message
+                        sendStatus({
+                            message: 'Mensaje enviado',
+                            clear: true
                         })
-
-                        
                     })
+
+                    /*chat.save(function (error) {
+                        if (!error) {
+                            Chat.find({}).populate('user').exec(function (error, chat) {
+                                io.emit('output', chat)//Send a new message
+                                sendStatus({
+                                    message: 'Mensaje enviado',
+                                    clear: true
+                                })
+                            })
+                        }
+                    });*/
+
+
                 }
             })
 
