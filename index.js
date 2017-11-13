@@ -44,7 +44,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                     chat.save(() => {//se guarda el mensaje mediante esta funcion
                         //////////////////////Envio de mensaje a los usuarios//////////////////////
                         //io.emit('output', [chat])//Se envia el mensaje guardado pero solo id y texto (no muestra todo)
-                        chat.findOne({ '_id': user }).populate('user').exec((err, res) => {// populate para obtener los datos del usuario que envio el mensaje
+                        Chat.findOne({ '_id': user }).populate('user').exec((err, res) => {// populate para obtener los datos del usuario que envio el mensaje
                             if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
                                 throw err
                             }
