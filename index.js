@@ -22,16 +22,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
             var sendStatus = (s) => {
                 socket.emit('status', s)
             }
-            //Get chats from mongo collection
-            /*chat.find({}, (err, res) => {
-                if (err) {
-                    throw err
-                }
-                
-                socket.emit('output', res)//Send messages at client in connection
-                socket.broadcast.emit('newuser', {text: 'Un nuevo usuario se ha conectado.'});
-            })*/
-
+           
             chat.find({}).populate('user').exec((err, res) => {
                 if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
                     throw err
