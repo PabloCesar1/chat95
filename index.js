@@ -38,18 +38,19 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 var  text = data.text
                 if (user == '' || text == '') {//Si los datos no estan completos
                     sendStatus('Nombre y mensaje requeridos')//Se envia un mensaje de alerta
-                } else {//De lo contrario
+                } else {//Si los datos estan completos
                     var chat = new Chat({ user: user, text: text })//se prepara el mensaje a guardar
                     console.log(data)
-                    chat.save(() => {//se guarda el mensaje mediante esta funcion
+                    chat.save((err, messageStored) => {//se guarda el mensaje mediante esta funcion
                         //////////////////////Envio de mensaje a los usuarios//////////////////////
-                        //io.emit('output', [chat])//Se envia el mensaje guardado pero solo id y texto (no muestra todo)
-                        Chat.findOne({ '_id': user }).populate('user').exec((err, res) => {// populate para obtener los datos del usuario que envio el mensaje
+                        io.emit('output', [chat])//Se envia el mensaje guardado pero solo id y texto (no muestra todo)
+                        console.log('El mensaje: '+messageStored)
+                        /*Chat.findOne({ '_id': user }).populate('user').exec((err, res) => {// populate para obtener los datos del usuario que envio el mensaje
                             if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
                                 throw err
                             }
                             socket.emit('output', res)//Send messages at client in connection
-                        })
+                        })*/
                         ///////////////////////////////////////////////////////////////
                         sendStatus({//se muestra mensaje de confirmacion
                             message: 'Mensaje enviado',
