@@ -40,9 +40,10 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                     sendStatus('Nombre y mensaje requeridos')//Se envia un mensaje de alerta
                 } else {//Si los datos estan completos
                     var chat = new Chat({ user: user, text: text })//se prepara el mensaje a guardar
-                    console.log(data)
+                   
                     chat.save((err, messageStored) => {//se guarda el mensaje mediante esta funcion
                         //////////////////////Envio de mensaje a los usuarios//////////////////////
+                        console.log('Datos del servidor: ' + data)
                         io.emit('newMessage', chat)//Se envia el mensaje guardado pero solo id y texto (no muestra todo)
                         /*messageStored.populate('user').exec((err, res) => {
                             console.log('El mensaje: '+res)
