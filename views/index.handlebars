@@ -122,16 +122,16 @@
                 socket.on('newMessage', function (data) {
                     console.log(data)
                     if (data.length) {
-                        /*for (var x = 0; x < data.length; x++) {
+                        //for (var x = 0; x < data.length; x++) {
                             // Build out message div
                             var message = document.createElement('div')//new container
                             message.setAttribute('class', 'chat-message'); //add class at new container
-                            message.textContent = data[x].user.name + ": " + data[x].text; //create content
+                            message.textContent = data.user + ": " + data.text; //create content
                             messages.appendChild(message); // add content
                             //messages.insertBefore(message, messages.firstChild);
                             messages.scrollTop = '9999';
                             //console.log(data[x])
-                        }*/
+                        //}
                     }
                 })
                 /*socket.on('mensaje', function(data){
