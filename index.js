@@ -40,7 +40,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 } else {
                     var chat = new Chat({ user: user, text: text })
                     //var chat = new Chat({ 'user': {'name':user}, text: text })                    
-                    //console.log(data)
+                    console.log(data)
                     chat.save(() => {
                         io.emit('output', [chat])//Send a new message
                         sendStatus({
