@@ -28,6 +28,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                     throw err
                 }
                 socket.emit('output', res)//Send messages at client in connection
+                console.log("Datos obtenidos:" + res)
                 socket.broadcast.emit('newuser', { text: 'Un nuevo usuario se ha conectado.' });
             })
 
@@ -39,7 +40,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 } else {
                     var chat = new Chat({ user: user, text: text })
                     //var chat = new Chat({ 'user': {'name':user}, text: text })                    
-                    console.log(data)
+                    //console.log(data)
                     chat.save(() => {
                         io.emit('output', [chat])//Send a new message
                         sendStatus({
