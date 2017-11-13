@@ -2,13 +2,13 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ChatSchema = Schema(
+var ChatSchema = Schema(// Collection with messages
 	{
-		text: String,
+		text: String,//Text type string
 		createdAt: { type: Date, default: Date.now },
 		user: { 
 			type : mongoose.Schema.Types.ObjectId,
-			ref:'User'
+			ref:'User',
 		}
 	}
 );

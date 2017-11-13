@@ -23,7 +23,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 socket.emit('status', s)
             }
            
-            chat.find({}).populate('user').exec((err, res) => {
+            chat.find({}).populate('user').exec((err, res) => {// populate to get a users data
                 if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
                     throw err
                 }
@@ -48,20 +48,6 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                             clear: true
                         })
                     })
-
-                    /*chat.save(function (error) {
-                        if (!error) {
-                            Chat.find({}).populate('user').exec(function (error, chat) {
-                                io.emit('output', chat)//Send a new message
-                                sendStatus({
-                                    message: 'Mensaje enviado',
-                                    clear: true
-                                })
-                            })
-                        }
-                    });*/
-
-
                 }
             })
 
