@@ -22,7 +22,7 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
             var sendStatus = (s) => {
                 socket.emit('status', s)
             }
-           
+
             chat.find({}).populate('user').exec((err, res) => {// populate to get a users data
                 if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
                     throw err
@@ -31,19 +31,27 @@ mongoose.connect('mongodb://pablo95:passtodb@ds121015.mlab.com:21015/mychat', (e
                 console.log("Datos obtenidos:" + res)
                 socket.broadcast.emit('newuser', { text: 'Un nuevo usuario se ha conectado.' });
             })
-
+            //----------------------------------------------------------------
+            //                                        || Al enviar un mensaje ||
             socket.on('input', (data) => {
                 let user = data.user
                 let text = data.text
-                if (user == '' || text == '') {
-                    sendStatus('Nombre y mensaje requeridos')
-                } else {
-                    var chat = new Chat({ user: user, text: text })
-                    //var chat = new Chat({ 'user': {'name':user}, text: text })                    
+                if (user == '' || text == '') {//Si los datos no estan completos
+                    sendStatus('Nombre y mensaje requeridos')//Se envia un mensaje de alerta
+                } else {//De lo contrario
+                    var chat = new Chat({ user: user, text: text })//se prepara el mensaje a guardar
                     console.log(data)
-                    chat.save(() => {
-                        io.emit('output', [chat])//Send a new message
-                        sendStatus({
+                    chat.save(() => {//se guarda el mensaje mediante esta funcion
+                        //////////////////////Envio de mensaje a los usuarios//////////////////////
+                        //io.emit('output', [chat])//Se envia el mensaje guardado pero solo id y texto (no muestra todo)
+                        chat.find({ _id: user }).populate('user').exec((err, res) => {// populate para obtener los datos del usuario que envio el mensaje
+                            if (err) { // Si hay un id de usuario que no existe mostrará un mensaje de error
+                                throw err
+                            }
+                            socket.emit('output', res)//Send messages at client in connection
+                        })
+                        ///////////////////////////////////////////////////////////////
+                        sendStatus({//se muestra mensaje de confirmacion
                             message: 'Mensaje enviado',
                             clear: true
                         })
